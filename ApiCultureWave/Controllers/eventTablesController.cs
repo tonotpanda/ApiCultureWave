@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ApiCultureWave.Clases;
 using ApiCultureWave.Models;
 
 namespace ApiCultureWave.Controllers
@@ -20,6 +22,7 @@ namespace ApiCultureWave.Controllers
         // GET: api/eventTables
         public IQueryable<eventTable> GeteventTable()
         {
+            db.Configuration.LazyLoadingEnabled = false;
             return db.eventTable;
         }
 
@@ -27,79 +30,136 @@ namespace ApiCultureWave.Controllers
         [ResponseType(typeof(eventTable))]
         public async Task<IHttpActionResult> GeteventTable(int id)
         {
-            eventTable eventTable = await db.eventTable.FindAsync(id);
-            if (eventTable == null)
+            IHttpActionResult result;
+            db.Configuration.LazyLoadingEnabled = false;
+
+            eventTable _eventTable = await db.eventTable
+                                        .Include("space")
+                                        .Include("reserve")
+                                        .Where(e => e.idEvent == id)
+                                        .FirstOrDefaultAsync();
+
+            if (_eventTable == null)
             {
-                return NotFound();
+                result = NotFound();
+            }
+            else 
+            {
+                result = Ok(_eventTable);
             }
 
-            return Ok(eventTable);
+            return result;
         }
 
         // PUT: api/eventTables/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PuteventTable(int id, eventTable eventTable)
+        public async Task<IHttpActionResult> PuteventTable(int id, eventTable _eventTable)
         {
+            IHttpActionResult result;
+            String message = "";
+
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                result = BadRequest(ModelState);
             }
-
-            if (id != eventTable.idEvent)
+            else 
             {
-                return BadRequest();
-            }
-
-            db.Entry(eventTable).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!eventTableExists(id))
+                if (id != _eventTable.idEvent)
                 {
-                    return NotFound();
+                    result = BadRequest();
                 }
-                else
+                else 
                 {
-                    throw;
+                    db.Entry(_eventTable).State = EntityState.Modified;
+
+                    try
+                    {
+                        await db.SaveChangesAsync();
+                        result = StatusCode(HttpStatusCode.NoContent);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!eventTableExists(id))
+                        {
+                            result = NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        SqlException sqlException = (SqlException)ex.InnerException.InnerException;
+                        message = Utilities.GetErrorMessage(sqlException);
+                        result = BadRequest(message);
+                    }
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return result;
         }
 
         // POST: api/eventTables
         [ResponseType(typeof(eventTable))]
         public async Task<IHttpActionResult> PosteventTable(eventTable eventTable)
         {
+            IHttpActionResult result;
+
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                result = BadRequest(ModelState);
+            }
+            else 
+            {
+                db.eventTable.Add(eventTable);
+                String message = "";
+
+                try 
+                {
+                    await db.SaveChangesAsync();
+                    result = CreatedAtRoute("DefaultApi", new { id = eventTable.idEvent }, eventTable);
+                }
+                catch (DbUpdateException ex)
+                {
+                    SqlException sqlException = (SqlException)ex.InnerException.InnerException;
+                    message = Utilities.GetErrorMessage(sqlException);
+                    result = BadRequest(message);
+                }
             }
 
-            db.eventTable.Add(eventTable);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = eventTable.idEvent }, eventTable);
+            return result;
         }
 
         // DELETE: api/eventTables/5
         [ResponseType(typeof(eventTable))]
         public async Task<IHttpActionResult> DeleteeventTable(int id)
         {
-            eventTable eventTable = await db.eventTable.FindAsync(id);
-            if (eventTable == null)
+            IHttpActionResult result;
+            String message = "";
+
+            eventTable _eventTable = await db.eventTable.FindAsync(id);
+            if (_eventTable == null)
             {
                 return NotFound();
             }
+            else 
+            {
+                try 
+                {
+                    db.eventTable.Remove(_eventTable);
+                    await db.SaveChangesAsync();
+                    result = Ok(_eventTable);
+                }
+                catch (DbUpdateException ex)
+                {
+                    SqlException sqlException = (SqlException)ex.InnerException.InnerException;
+                    message = Utilities.GetErrorMessage(sqlException);
+                    result = BadRequest(message);
+                }
+            }
 
-            db.eventTable.Remove(eventTable);
-            await db.SaveChangesAsync();
-
-            return Ok(eventTable);
+            return result;
         }
 
         protected override void Dispose(bool disposing)
