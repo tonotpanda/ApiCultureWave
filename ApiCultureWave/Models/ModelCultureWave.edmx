@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="cultureWaveModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="eventTable">
+          <Key>
+            <PropertyRef Name="idEvent" />
+          </Key>
+          <Property Name="idEvent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSpace" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="250" />
+          <Property Name="startDate" Type="datetime" Nullable="false" />
+          <Property Name="endDate" Type="datetime" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="message">
+          <Key>
+            <PropertyRef Name="idMessage" />
+          </Key>
+          <Property Name="idMessage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="text" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="dateTime" Type="datetime" />
+          <Property Name="idUser" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reserve">
+          <Key>
+            <PropertyRef Name="idReserve" />
+          </Key>
+          <Property Name="idReserve" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEvent" Type="int" Nullable="false" />
+          <Property Name="reserveDate" Type="date" />
+        </EntityType>
+        <EntityType Name="reserve_user">
+          <Key>
+            <PropertyRef Name="idUser" />
+            <PropertyRef Name="idReserve" />
+          </Key>
+          <Property Name="idUser" Type="int" Nullable="false" />
+          <Property Name="idReserve" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="idRol" />
+          </Key>
+          <Property Name="idRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="seat">
+          <Key>
+            <PropertyRef Name="idSeat" />
+          </Key>
+          <Property Name="idSeat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSpace" Type="int" Nullable="false" />
+          <Property Name="idReserve" Type="int" Nullable="false" />
+          <Property Name="row" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="numSeat" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="space">
+          <Key>
+            <PropertyRef Name="idSpace" />
+          </Key>
+          <Property Name="idSpace" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="capacity" Type="int" Nullable="false" />
+          <Property Name="fixeSeats" Type="bit" />
+          <Property Name="available" Type="bit" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idReserve" Type="int" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="creationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="rol" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__event__idSpace__4316F928">
+          <End Role="space" Type="Self.space" Multiplicity="0..1" />
+          <End Role="eventTable" Type="Self.eventTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="space">
+              <PropertyRef Name="idSpace" />
+            </Principal>
+            <Dependent Role="eventTable">
+              <PropertyRef Name="idSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__message__idUser__3C69FB99">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="message" Type="Self.message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="message">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__reserve__idEvent__45F365D3">
+          <End Role="eventTable" Type="Self.eventTable" Multiplicity="1" />
+          <End Role="reserve" Type="Self.reserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventTable">
+              <PropertyRef Name="idEvent" />
+            </Principal>
+            <Dependent Role="reserve">
+              <PropertyRef Name="idEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__reserve_u__idRes__5070F446">
+          <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
+          <End Role="reserve_user" Type="Self.reserve_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reserve">
+              <PropertyRef Name="idReserve" />
+            </Principal>
+            <Dependent Role="reserve_user">
+              <PropertyRef Name="idReserve" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__reserve_u__idUse__4F7CD00D">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="reserve_user" Type="Self.reserve_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="reserve_user">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seat__idReserve__49C3F6B7">
+          <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reserve">
+              <PropertyRef Name="idReserve" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="idReserve" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seat__idSpace__48CFD27E">
+          <End Role="space" Type="Self.space" Multiplicity="1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="space">
+              <PropertyRef Name="idSpace" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="idSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ticket__idReserv__4CA06362">
+          <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reserve">
+              <PropertyRef Name="idReserve" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="idReserve" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user__rol__398D8EEE">
+          <End Role="rol" Type="Self.rol" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cultureWaveModelStoreContainer">
+          <EntitySet Name="eventTable" EntityType="Self.eventTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="message" EntityType="Self.message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reserve" EntityType="Self.reserve" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reserve_user" EntityType="Self.reserve_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rol" EntityType="Self.rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="seat" EntityType="Self.seat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="space" EntityType="Self.space" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__event__idSpace__4316F928" Association="Self.FK__event__idSpace__4316F928">
+            <End Role="space" EntitySet="space" />
+            <End Role="eventTable" EntitySet="eventTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__message__idUser__3C69FB99" Association="Self.FK__message__idUser__3C69FB99">
+            <End Role="user" EntitySet="user" />
+            <End Role="message" EntitySet="message" />
+          </AssociationSet>
+          <AssociationSet Name="FK__reserve__idEvent__45F365D3" Association="Self.FK__reserve__idEvent__45F365D3">
+            <End Role="eventTable" EntitySet="eventTable" />
+            <End Role="reserve" EntitySet="reserve" />
+          </AssociationSet>
+          <AssociationSet Name="FK__reserve_u__idRes__5070F446" Association="Self.FK__reserve_u__idRes__5070F446">
+            <End Role="reserve" EntitySet="reserve" />
+            <End Role="reserve_user" EntitySet="reserve_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__reserve_u__idUse__4F7CD00D" Association="Self.FK__reserve_u__idUse__4F7CD00D">
+            <End Role="user" EntitySet="user" />
+            <End Role="reserve_user" EntitySet="reserve_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seat__idReserve__49C3F6B7" Association="Self.FK__seat__idReserve__49C3F6B7">
+            <End Role="reserve" EntitySet="reserve" />
+            <End Role="seat" EntitySet="seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seat__idSpace__48CFD27E" Association="Self.FK__seat__idSpace__48CFD27E">
+            <End Role="space" EntitySet="space" />
+            <End Role="seat" EntitySet="seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ticket__idReserv__4CA06362" Association="Self.FK__ticket__idReserv__4CA06362">
+            <End Role="reserve" EntitySet="reserve" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user__rol__398D8EEE" Association="Self.FK__user__rol__398D8EEE">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cultureWaveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="eventTable">
+          <Key>
+            <PropertyRef Name="idEvent" />
+          </Key>
+          <Property Name="idEvent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSpace" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="space" Relationship="Self.FK__event__idSpace__4316F928" FromRole="eventTable" ToRole="space" />
+          <NavigationProperty Name="reserve" Relationship="Self.FK__reserve__idEvent__45F365D3" FromRole="eventTable" ToRole="reserve" />
+        </EntityType>
+        <EntityType Name="message">
+          <Key>
+            <PropertyRef Name="idMessage" />
+          </Key>
+          <Property Name="idMessage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="text" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dateTime" Type="DateTime" Precision="3" />
+          <Property Name="idUser" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK__message__idUser__3C69FB99" FromRole="message" ToRole="user" />
+        </EntityType>
+        <EntityType Name="reserve">
+          <Key>
+            <PropertyRef Name="idReserve" />
+          </Key>
+          <Property Name="idReserve" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEvent" Type="Int32" Nullable="false" />
+          <Property Name="reserveDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="eventTable" Relationship="Self.FK__reserve__idEvent__45F365D3" FromRole="reserve" ToRole="eventTable" />
+          <NavigationProperty Name="seat" Relationship="Self.FK__seat__idReserve__49C3F6B7" FromRole="reserve" ToRole="seat" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK__ticket__idReserv__4CA06362" FromRole="reserve" ToRole="ticket" />
+          <NavigationProperty Name="user" Relationship="Self.reserve_user" FromRole="reserve" ToRole="user" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="idRol" />
+          </Key>
+          <Property Name="idRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK__user__rol__398D8EEE" FromRole="rol" ToRole="user" />
+        </EntityType>
+        <EntityType Name="seat">
+          <Key>
+            <PropertyRef Name="idSeat" />
+          </Key>
+          <Property Name="idSeat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSpace" Type="Int32" Nullable="false" />
+          <Property Name="idReserve" Type="Int32" Nullable="false" />
+          <Property Name="row" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="numSeat" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="reserve" Relationship="Self.FK__seat__idReserve__49C3F6B7" FromRole="seat" ToRole="reserve" />
+          <NavigationProperty Name="space" Relationship="Self.FK__seat__idSpace__48CFD27E" FromRole="seat" ToRole="space" />
+        </EntityType>
+        <EntityType Name="space">
+          <Key>
+            <PropertyRef Name="idSpace" />
+          </Key>
+          <Property Name="idSpace" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <Property Name="fixeSeats" Type="Boolean" />
+          <Property Name="available" Type="Boolean" />
+          <NavigationProperty Name="eventTable" Relationship="Self.FK__event__idSpace__4316F928" FromRole="space" ToRole="eventTable" />
+          <NavigationProperty Name="seat" Relationship="Self.FK__seat__idSpace__48CFD27E" FromRole="space" ToRole="seat" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idReserve" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="creationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="reserve" Relationship="Self.FK__ticket__idReserv__4CA06362" FromRole="ticket" ToRole="reserve" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="idUser" />
+          </Key>
+          <Property Name="idUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="message" Relationship="Self.FK__message__idUser__3C69FB99" FromRole="user" ToRole="message" />
+          <NavigationProperty Name="rol1" Relationship="Self.FK__user__rol__398D8EEE" FromRole="user" ToRole="rol" />
+          <NavigationProperty Name="reserve" Relationship="Self.reserve_user" FromRole="user" ToRole="reserve" />
+        </EntityType>
+        <Association Name="FK__event__idSpace__4316F928">
+          <End Role="space" Type="Self.space" Multiplicity="0..1" />
+          <End Role="eventTable" Type="Self.eventTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="space">
+              <PropertyRef Name="idSpace" />
+            </Principal>
+            <Dependent Role="eventTable">
+              <PropertyRef Name="idSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__reserve__idEvent__45F365D3">
+          <End Role="eventTable" Type="Self.eventTable" Multiplicity="1" />
+          <End Role="reserve" Type="Self.reserve" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventTable">
+              <PropertyRef Name="idEvent" />
+            </Principal>
+            <Dependent Role="reserve">
+              <PropertyRef Name="idEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__message__idUser__3C69FB99">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="message" Type="Self.message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="message">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seat__idReserve__49C3F6B7">
+          <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reserve">
+              <PropertyRef Name="idReserve" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="idReserve" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ticket__idReserv__4CA06362">
+          <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reserve">
+              <PropertyRef Name="idReserve" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="idReserve" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__user__rol__398D8EEE">
+          <End Role="rol" Type="Self.rol" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seat__idSpace__48CFD27E">
+          <End Role="space" Type="Self.space" Multiplicity="1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="space">
+              <PropertyRef Name="idSpace" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="idSpace" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="reserve_user">
+          <End Role="reserve" Type="Self.reserve" Multiplicity="*" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="cultureWaveEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="eventTable" EntityType="Self.eventTable" />
+          <EntitySet Name="message" EntityType="Self.message" />
+          <EntitySet Name="reserve" EntityType="Self.reserve" />
+          <EntitySet Name="rol" EntityType="Self.rol" />
+          <EntitySet Name="seat" EntityType="Self.seat" />
+          <EntitySet Name="space" EntityType="Self.space" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" />
+          <EntitySet Name="user" EntityType="Self.user" />
+          <AssociationSet Name="FK__event__idSpace__4316F928" Association="Self.FK__event__idSpace__4316F928">
+            <End Role="space" EntitySet="space" />
+            <End Role="eventTable" EntitySet="eventTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__reserve__idEvent__45F365D3" Association="Self.FK__reserve__idEvent__45F365D3">
+            <End Role="eventTable" EntitySet="eventTable" />
+            <End Role="reserve" EntitySet="reserve" />
+          </AssociationSet>
+          <AssociationSet Name="FK__message__idUser__3C69FB99" Association="Self.FK__message__idUser__3C69FB99">
+            <End Role="user" EntitySet="user" />
+            <End Role="message" EntitySet="message" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seat__idReserve__49C3F6B7" Association="Self.FK__seat__idReserve__49C3F6B7">
+            <End Role="reserve" EntitySet="reserve" />
+            <End Role="seat" EntitySet="seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ticket__idReserv__4CA06362" Association="Self.FK__ticket__idReserv__4CA06362">
+            <End Role="reserve" EntitySet="reserve" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__user__rol__398D8EEE" Association="Self.FK__user__rol__398D8EEE">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seat__idSpace__48CFD27E" Association="Self.FK__seat__idSpace__48CFD27E">
+            <End Role="space" EntitySet="space" />
+            <End Role="seat" EntitySet="seat" />
+          </AssociationSet>
+          <AssociationSet Name="reserve_user" Association="Self.reserve_user">
+            <End Role="reserve" EntitySet="reserve" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cultureWaveModelStoreContainer" CdmEntityContainer="cultureWaveEntities">
+          <EntitySetMapping Name="eventTable">
+            <EntityTypeMapping TypeName="cultureWaveModel.eventTable">
+              <MappingFragment StoreEntitySet="eventTable">
+                <ScalarProperty Name="idEvent" ColumnName="idEvent" />
+                <ScalarProperty Name="idSpace" ColumnName="idSpace" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="startDate" ColumnName="startDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="message">
+            <EntityTypeMapping TypeName="cultureWaveModel.message">
+              <MappingFragment StoreEntitySet="message">
+                <ScalarProperty Name="idMessage" ColumnName="idMessage" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="dateTime" ColumnName="dateTime" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reserve">
+            <EntityTypeMapping TypeName="cultureWaveModel.reserve">
+              <MappingFragment StoreEntitySet="reserve">
+                <ScalarProperty Name="idReserve" ColumnName="idReserve" />
+                <ScalarProperty Name="idEvent" ColumnName="idEvent" />
+                <ScalarProperty Name="reserveDate" ColumnName="reserveDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rol">
+            <EntityTypeMapping TypeName="cultureWaveModel.rol">
+              <MappingFragment StoreEntitySet="rol">
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seat">
+            <EntityTypeMapping TypeName="cultureWaveModel.seat">
+              <MappingFragment StoreEntitySet="seat">
+                <ScalarProperty Name="idSeat" ColumnName="idSeat" />
+                <ScalarProperty Name="idSpace" ColumnName="idSpace" />
+                <ScalarProperty Name="idReserve" ColumnName="idReserve" />
+                <ScalarProperty Name="row" ColumnName="row" />
+                <ScalarProperty Name="numSeat" ColumnName="numSeat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="space">
+            <EntityTypeMapping TypeName="cultureWaveModel.space">
+              <MappingFragment StoreEntitySet="space">
+                <ScalarProperty Name="idSpace" ColumnName="idSpace" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="fixeSeats" ColumnName="fixeSeats" />
+                <ScalarProperty Name="available" ColumnName="available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ticket">
+            <EntityTypeMapping TypeName="cultureWaveModel.ticket">
+              <MappingFragment StoreEntitySet="ticket">
+                <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+                <ScalarProperty Name="idReserve" ColumnName="idReserve" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="cultureWaveModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="reserve_user" TypeName="cultureWaveModel.reserve_user" StoreEntitySet="reserve_user">
+            <EndProperty Name="reserve">
+              <ScalarProperty Name="idReserve" ColumnName="idReserve" />
+            </EndProperty>
+            <EndProperty Name="user">
+              <ScalarProperty Name="idUser" ColumnName="idUser" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
