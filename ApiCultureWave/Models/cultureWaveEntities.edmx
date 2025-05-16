@@ -16,6 +16,7 @@
           <Property Name="startDate" Type="datetime" Nullable="false" />
           <Property Name="endDate" Type="datetime" Nullable="false" />
           <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="capacity" Type="int" />
         </EntityType>
         <EntityType Name="message">
           <Key>
@@ -78,7 +79,7 @@
           <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="200" />
-          <Property Name="creationDate" Type="datetime" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -89,8 +90,9 @@
           <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="rol" Type="int" Nullable="false" />
+          <Property Name="profilePicture" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <Association Name="FK__event__idSpace__4316F928">
+        <Association Name="FK__eventTabl__idSpa__7B5B524B">
           <End Role="space" Type="Self.space" Multiplicity="0..1" />
           <End Role="eventTable" Type="Self.eventTable" Multiplicity="*" />
           <ReferentialConstraint>
@@ -102,7 +104,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__message__idUser__3C69FB99">
+        <Association Name="FK__message__idUser__74AE54BC">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="message" Type="Self.message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -114,7 +116,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__reserve__idEvent__45F365D3">
+        <Association Name="FK__reserve__idEvent__7E37BEF6">
           <End Role="eventTable" Type="Self.eventTable" Multiplicity="1" />
           <End Role="reserve" Type="Self.reserve" Multiplicity="*" />
           <ReferentialConstraint>
@@ -126,7 +128,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__reserve_u__idRes__5070F446">
+        <Association Name="FK__reserve_u__idRes__08B54D69">
           <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
           <End Role="reserve_user" Type="Self.reserve_user" Multiplicity="*" />
           <ReferentialConstraint>
@@ -138,7 +140,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__reserve_u__idUse__4F7CD00D">
+        <Association Name="FK__reserve_u__idUse__07C12930">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="reserve_user" Type="Self.reserve_user" Multiplicity="*" />
           <ReferentialConstraint>
@@ -150,7 +152,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__seat__idReserve__49C3F6B7">
+        <Association Name="FK__seat__idReserve__02084FDA">
           <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
           <End Role="seat" Type="Self.seat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -162,7 +164,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__seat__idSpace__48CFD27E">
+        <Association Name="FK__seat__idSpace__01142BA1">
           <End Role="space" Type="Self.space" Multiplicity="1" />
           <End Role="seat" Type="Self.seat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -174,7 +176,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ticket__idReserv__4CA06362">
+        <Association Name="FK__ticket__idReserv__04E4BC85">
           <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
           <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
           <ReferentialConstraint>
@@ -186,7 +188,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__user__rol__398D8EEE">
+        <Association Name="FK__user__rol__71D1E811">
           <End Role="rol" Type="Self.rol" Multiplicity="1" />
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
@@ -208,39 +210,39 @@
           <EntitySet Name="space" EntityType="Self.space" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ticket" EntityType="Self.ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__event__idSpace__4316F928" Association="Self.FK__event__idSpace__4316F928">
+          <AssociationSet Name="FK__eventTabl__idSpa__7B5B524B" Association="Self.FK__eventTabl__idSpa__7B5B524B">
             <End Role="space" EntitySet="space" />
             <End Role="eventTable" EntitySet="eventTable" />
           </AssociationSet>
-          <AssociationSet Name="FK__message__idUser__3C69FB99" Association="Self.FK__message__idUser__3C69FB99">
+          <AssociationSet Name="FK__message__idUser__74AE54BC" Association="Self.FK__message__idUser__74AE54BC">
             <End Role="user" EntitySet="user" />
             <End Role="message" EntitySet="message" />
           </AssociationSet>
-          <AssociationSet Name="FK__reserve__idEvent__45F365D3" Association="Self.FK__reserve__idEvent__45F365D3">
+          <AssociationSet Name="FK__reserve__idEvent__7E37BEF6" Association="Self.FK__reserve__idEvent__7E37BEF6">
             <End Role="eventTable" EntitySet="eventTable" />
             <End Role="reserve" EntitySet="reserve" />
           </AssociationSet>
-          <AssociationSet Name="FK__reserve_u__idRes__5070F446" Association="Self.FK__reserve_u__idRes__5070F446">
+          <AssociationSet Name="FK__reserve_u__idRes__08B54D69" Association="Self.FK__reserve_u__idRes__08B54D69">
             <End Role="reserve" EntitySet="reserve" />
             <End Role="reserve_user" EntitySet="reserve_user" />
           </AssociationSet>
-          <AssociationSet Name="FK__reserve_u__idUse__4F7CD00D" Association="Self.FK__reserve_u__idUse__4F7CD00D">
+          <AssociationSet Name="FK__reserve_u__idUse__07C12930" Association="Self.FK__reserve_u__idUse__07C12930">
             <End Role="user" EntitySet="user" />
             <End Role="reserve_user" EntitySet="reserve_user" />
           </AssociationSet>
-          <AssociationSet Name="FK__seat__idReserve__49C3F6B7" Association="Self.FK__seat__idReserve__49C3F6B7">
+          <AssociationSet Name="FK__seat__idReserve__02084FDA" Association="Self.FK__seat__idReserve__02084FDA">
             <End Role="reserve" EntitySet="reserve" />
             <End Role="seat" EntitySet="seat" />
           </AssociationSet>
-          <AssociationSet Name="FK__seat__idSpace__48CFD27E" Association="Self.FK__seat__idSpace__48CFD27E">
+          <AssociationSet Name="FK__seat__idSpace__01142BA1" Association="Self.FK__seat__idSpace__01142BA1">
             <End Role="space" EntitySet="space" />
             <End Role="seat" EntitySet="seat" />
           </AssociationSet>
-          <AssociationSet Name="FK__ticket__idReserv__4CA06362" Association="Self.FK__ticket__idReserv__4CA06362">
+          <AssociationSet Name="FK__ticket__idReserv__04E4BC85" Association="Self.FK__ticket__idReserv__04E4BC85">
             <End Role="reserve" EntitySet="reserve" />
             <End Role="ticket" EntitySet="ticket" />
           </AssociationSet>
-          <AssociationSet Name="FK__user__rol__398D8EEE" Association="Self.FK__user__rol__398D8EEE">
+          <AssociationSet Name="FK__user__rol__71D1E811" Association="Self.FK__user__rol__71D1E811">
             <End Role="rol" EntitySet="rol" />
             <End Role="user" EntitySet="user" />
           </AssociationSet>
@@ -261,8 +263,9 @@
           <Property Name="startDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="endDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="space" Relationship="Self.FK__event__idSpace__4316F928" FromRole="eventTable" ToRole="space" />
-          <NavigationProperty Name="reserve" Relationship="Self.FK__reserve__idEvent__45F365D3" FromRole="eventTable" ToRole="reserve" />
+          <Property Name="capacity" Type="Int32" />
+          <NavigationProperty Name="space" Relationship="Self.FK__eventTabl__idSpa__7B5B524B" FromRole="eventTable" ToRole="space" />
+          <NavigationProperty Name="reserve" Relationship="Self.FK__reserve__idEvent__7E37BEF6" FromRole="eventTable" ToRole="reserve" />
         </EntityType>
         <EntityType Name="message">
           <Key>
@@ -272,7 +275,7 @@
           <Property Name="text" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="dateTime" Type="DateTime" Precision="3" />
           <Property Name="idUser" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK__message__idUser__3C69FB99" FromRole="message" ToRole="user" />
+          <NavigationProperty Name="user" Relationship="Self.FK__message__idUser__74AE54BC" FromRole="message" ToRole="user" />
         </EntityType>
         <EntityType Name="reserve">
           <Key>
@@ -281,9 +284,9 @@
           <Property Name="idReserve" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idEvent" Type="Int32" Nullable="false" />
           <Property Name="reserveDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="eventTable" Relationship="Self.FK__reserve__idEvent__45F365D3" FromRole="reserve" ToRole="eventTable" />
-          <NavigationProperty Name="seat" Relationship="Self.FK__seat__idReserve__49C3F6B7" FromRole="reserve" ToRole="seat" />
-          <NavigationProperty Name="ticket" Relationship="Self.FK__ticket__idReserv__4CA06362" FromRole="reserve" ToRole="ticket" />
+          <NavigationProperty Name="eventTable" Relationship="Self.FK__reserve__idEvent__7E37BEF6" FromRole="reserve" ToRole="eventTable" />
+          <NavigationProperty Name="seat" Relationship="Self.FK__seat__idReserve__02084FDA" FromRole="reserve" ToRole="seat" />
+          <NavigationProperty Name="ticket" Relationship="Self.FK__ticket__idReserv__04E4BC85" FromRole="reserve" ToRole="ticket" />
           <NavigationProperty Name="user" Relationship="Self.reserve_user" FromRole="reserve" ToRole="user" />
         </EntityType>
         <EntityType Name="rol">
@@ -292,7 +295,7 @@
           </Key>
           <Property Name="idRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK__user__rol__398D8EEE" FromRole="rol" ToRole="user" />
+          <NavigationProperty Name="user" Relationship="Self.FK__user__rol__71D1E811" FromRole="rol" ToRole="user" />
         </EntityType>
         <EntityType Name="seat">
           <Key>
@@ -303,8 +306,8 @@
           <Property Name="idReserve" Type="Int32" Nullable="false" />
           <Property Name="row" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="numSeat" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="reserve" Relationship="Self.FK__seat__idReserve__49C3F6B7" FromRole="seat" ToRole="reserve" />
-          <NavigationProperty Name="space" Relationship="Self.FK__seat__idSpace__48CFD27E" FromRole="seat" ToRole="space" />
+          <NavigationProperty Name="reserve" Relationship="Self.FK__seat__idReserve__02084FDA" FromRole="seat" ToRole="reserve" />
+          <NavigationProperty Name="space" Relationship="Self.FK__seat__idSpace__01142BA1" FromRole="seat" ToRole="space" />
         </EntityType>
         <EntityType Name="space">
           <Key>
@@ -315,8 +318,8 @@
           <Property Name="capacity" Type="Int32" Nullable="false" />
           <Property Name="fixeSeats" Type="Boolean" />
           <Property Name="available" Type="Boolean" />
-          <NavigationProperty Name="eventTable" Relationship="Self.FK__event__idSpace__4316F928" FromRole="space" ToRole="eventTable" />
-          <NavigationProperty Name="seat" Relationship="Self.FK__seat__idSpace__48CFD27E" FromRole="space" ToRole="seat" />
+          <NavigationProperty Name="eventTable" Relationship="Self.FK__eventTabl__idSpa__7B5B524B" FromRole="space" ToRole="eventTable" />
+          <NavigationProperty Name="seat" Relationship="Self.FK__seat__idSpace__01142BA1" FromRole="space" ToRole="seat" />
         </EntityType>
         <EntityType Name="ticket">
           <Key>
@@ -327,8 +330,8 @@
           <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="creationDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="reserve" Relationship="Self.FK__ticket__idReserv__4CA06362" FromRole="ticket" ToRole="reserve" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="reserve" Relationship="Self.FK__ticket__idReserv__04E4BC85" FromRole="ticket" ToRole="reserve" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -339,11 +342,12 @@
           <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="rol" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="message" Relationship="Self.FK__message__idUser__3C69FB99" FromRole="user" ToRole="message" />
-          <NavigationProperty Name="rol1" Relationship="Self.FK__user__rol__398D8EEE" FromRole="user" ToRole="rol" />
+          <Property Name="profilePicture" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="message" Relationship="Self.FK__message__idUser__74AE54BC" FromRole="user" ToRole="message" />
+          <NavigationProperty Name="rol1" Relationship="Self.FK__user__rol__71D1E811" FromRole="user" ToRole="rol" />
           <NavigationProperty Name="reserve" Relationship="Self.reserve_user" FromRole="user" ToRole="reserve" />
         </EntityType>
-        <Association Name="FK__event__idSpace__4316F928">
+        <Association Name="FK__eventTabl__idSpa__7B5B524B">
           <End Role="space" Type="Self.space" Multiplicity="0..1" />
           <End Role="eventTable" Type="Self.eventTable" Multiplicity="*" />
           <ReferentialConstraint>
@@ -355,7 +359,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__reserve__idEvent__45F365D3">
+        <Association Name="FK__reserve__idEvent__7E37BEF6">
           <End Role="eventTable" Type="Self.eventTable" Multiplicity="1" />
           <End Role="reserve" Type="Self.reserve" Multiplicity="*" />
           <ReferentialConstraint>
@@ -367,7 +371,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__message__idUser__3C69FB99">
+        <Association Name="FK__message__idUser__74AE54BC">
           <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="message" Type="Self.message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -379,7 +383,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__seat__idReserve__49C3F6B7">
+        <Association Name="FK__seat__idReserve__02084FDA">
           <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
           <End Role="seat" Type="Self.seat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -391,7 +395,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ticket__idReserv__4CA06362">
+        <Association Name="FK__ticket__idReserv__04E4BC85">
           <End Role="reserve" Type="Self.reserve" Multiplicity="1" />
           <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
           <ReferentialConstraint>
@@ -403,7 +407,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__user__rol__398D8EEE">
+        <Association Name="FK__user__rol__71D1E811">
           <End Role="rol" Type="Self.rol" Multiplicity="1" />
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
@@ -415,7 +419,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__seat__idSpace__48CFD27E">
+        <Association Name="FK__seat__idSpace__01142BA1">
           <End Role="space" Type="Self.space" Multiplicity="1" />
           <End Role="seat" Type="Self.seat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -440,31 +444,31 @@
           <EntitySet Name="space" EntityType="Self.space" />
           <EntitySet Name="ticket" EntityType="Self.ticket" />
           <EntitySet Name="user" EntityType="Self.user" />
-          <AssociationSet Name="FK__event__idSpace__4316F928" Association="Self.FK__event__idSpace__4316F928">
+          <AssociationSet Name="FK__eventTabl__idSpa__7B5B524B" Association="Self.FK__eventTabl__idSpa__7B5B524B">
             <End Role="space" EntitySet="space" />
             <End Role="eventTable" EntitySet="eventTable" />
           </AssociationSet>
-          <AssociationSet Name="FK__reserve__idEvent__45F365D3" Association="Self.FK__reserve__idEvent__45F365D3">
+          <AssociationSet Name="FK__reserve__idEvent__7E37BEF6" Association="Self.FK__reserve__idEvent__7E37BEF6">
             <End Role="eventTable" EntitySet="eventTable" />
             <End Role="reserve" EntitySet="reserve" />
           </AssociationSet>
-          <AssociationSet Name="FK__message__idUser__3C69FB99" Association="Self.FK__message__idUser__3C69FB99">
+          <AssociationSet Name="FK__message__idUser__74AE54BC" Association="Self.FK__message__idUser__74AE54BC">
             <End Role="user" EntitySet="user" />
             <End Role="message" EntitySet="message" />
           </AssociationSet>
-          <AssociationSet Name="FK__seat__idReserve__49C3F6B7" Association="Self.FK__seat__idReserve__49C3F6B7">
+          <AssociationSet Name="FK__seat__idReserve__02084FDA" Association="Self.FK__seat__idReserve__02084FDA">
             <End Role="reserve" EntitySet="reserve" />
             <End Role="seat" EntitySet="seat" />
           </AssociationSet>
-          <AssociationSet Name="FK__ticket__idReserv__4CA06362" Association="Self.FK__ticket__idReserv__4CA06362">
+          <AssociationSet Name="FK__ticket__idReserv__04E4BC85" Association="Self.FK__ticket__idReserv__04E4BC85">
             <End Role="reserve" EntitySet="reserve" />
             <End Role="ticket" EntitySet="ticket" />
           </AssociationSet>
-          <AssociationSet Name="FK__user__rol__398D8EEE" Association="Self.FK__user__rol__398D8EEE">
+          <AssociationSet Name="FK__user__rol__71D1E811" Association="Self.FK__user__rol__71D1E811">
             <End Role="rol" EntitySet="rol" />
             <End Role="user" EntitySet="user" />
           </AssociationSet>
-          <AssociationSet Name="FK__seat__idSpace__48CFD27E" Association="Self.FK__seat__idSpace__48CFD27E">
+          <AssociationSet Name="FK__seat__idSpace__01142BA1" Association="Self.FK__seat__idSpace__01142BA1">
             <End Role="space" EntitySet="space" />
             <End Role="seat" EntitySet="seat" />
           </AssociationSet>
@@ -489,6 +493,7 @@
                 <ScalarProperty Name="startDate" ColumnName="startDate" />
                 <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -561,6 +566,7 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="profilePicture" ColumnName="profilePicture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

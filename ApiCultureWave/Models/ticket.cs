@@ -19,7 +19,7 @@ namespace ApiCultureWave.Models
         public string type { get; set; }
         public string status { get; set; }
         public string description { get; set; }
-        public Nullable<System.DateTime> creationDate { get; set; }
+        public System.DateTime creationDate { get; set; }
     
         public virtual reserve reserve { get; set; }
     }

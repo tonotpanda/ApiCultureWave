@@ -26,6 +26,7 @@ namespace ApiCultureWave.Models
         public string email { get; set; }
         public string password { get; set; }
         public int rol { get; set; }
+        public string profilePicture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<message> message { get; set; }

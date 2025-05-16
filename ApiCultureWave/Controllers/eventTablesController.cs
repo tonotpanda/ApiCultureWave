@@ -51,6 +51,41 @@ namespace ApiCultureWave.Controllers
             return result;
         }
 
+        // GET: api/eventTables/ReservesByUser/5
+        [HttpGet]
+        [Route("api/eventTables/ReservesByUser/{idUser}")]
+        public async Task<IHttpActionResult> GetReservesByUser(int idUser)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+
+            try
+            {
+                // Trae reservas que pertenecen al usuario y carga el evento
+                var reserves = await db.reserve
+                    .Where(r => r.user.Any(u => u.idUser == idUser))
+                    .Include("eventTable")
+                    .Select(r => new
+                    {
+                        r.idReserve,
+                        r.reserveDate,
+                        EventName = r.eventTable.name,
+                        r.idEvent
+                    })
+                    .ToListAsync();
+
+                if (reserves == null || reserves.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(reserves);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
         // PUT: api/eventTables/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PuteventTable(int id, eventTable _eventTable)

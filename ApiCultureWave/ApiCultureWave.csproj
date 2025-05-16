@@ -176,44 +176,44 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\cultureWaveEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>cultureWaveEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cultureWaveEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cultureWaveEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>cultureWaveEntities.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\eventTable.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\message.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelCultureWave.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelCultureWave.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelCultureWave.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelCultureWave.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelCultureWave.edmx</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\reserve.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\rol.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\seat.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\space.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ticket.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
-      <DependentUpon>ModelCultureWave.tt</DependentUpon>
+      <DependentUpon>cultureWaveEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -237,15 +237,15 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\ModelCultureWave.Context.tt">
+    <Content Include="Models\cultureWaveEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelCultureWave.edmx</DependentUpon>
-      <LastGenOutput>ModelCultureWave.Context.cs</LastGenOutput>
+      <DependentUpon>cultureWaveEntities.edmx</DependentUpon>
+      <LastGenOutput>cultureWaveEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ModelCultureWave.tt">
+    <Content Include="Models\cultureWaveEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelCultureWave.edmx</DependentUpon>
-      <LastGenOutput>ModelCultureWave.cs</LastGenOutput>
+      <DependentUpon>cultureWaveEntities.edmx</DependentUpon>
+      <LastGenOutput>cultureWaveEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -272,12 +272,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\ModelCultureWave.edmx">
+    <EntityDeploy Include="Models\cultureWaveEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelCultureWave.Designer.cs</LastGenOutput>
+      <LastGenOutput>cultureWaveEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ModelCultureWave.edmx.diagram">
-      <DependentUpon>ModelCultureWave.edmx</DependentUpon>
+    <Content Include="Models\cultureWaveEntities.edmx.diagram">
+      <DependentUpon>cultureWaveEntities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />

@@ -27,6 +27,7 @@ namespace ApiCultureWave.Models
         public System.DateTime startDate { get; set; }
         public System.DateTime endDate { get; set; }
         public string status { get; set; }
+        public Nullable<int> capacity { get; set; }
     
         public virtual space space { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

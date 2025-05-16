@@ -23,6 +23,7 @@ namespace ApiCultureWave.Controllers
         public IQueryable<space> Getspace()
         {
             db.Configuration.LazyLoadingEnabled = false;
+            var spaces = db.space.ToList();
             return db.space;
         }
 
