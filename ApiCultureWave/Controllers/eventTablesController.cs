@@ -197,6 +197,29 @@ namespace ApiCultureWave.Controllers
             return result;
         }
 
+        // DELETE: api/eventTables/DeleteReserve/5
+        [HttpDelete]
+        [Route("api/eventTables/DeleteReserve/{id}")]
+        public async Task<IHttpActionResult> DeleteReserve(int id)
+        {
+            var reserve = await db.reserve.FindAsync(id);
+            if (reserve == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                db.reserve.Remove(reserve);
+                await db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
